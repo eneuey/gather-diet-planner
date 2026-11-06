@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8f4">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="no-referrer">
+  <title>Gather — food & nutrition planner</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="data.js" defer></script>
+  <script src="food-catalog.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Gather home"><span class="brand-icon">g</span> gather<span class="brand-dot">.</span></a>
+    <nav aria-label="Main navigation"><a href="#planner">Planner</a><a href="#guide">How it works</a></nav>
+    <button class="reset-link" id="reset-button" type="button">Reset plan <span aria-hidden="true">↺</span></button>
+  </header>
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy"><div class="eyebrow"><span class="eyebrow-dot"></span> A little more mindful, one meal at a time</div>
+        <h1>Make room for<br><em>good food.</em></h1>
+        <p>A gentle space to explore everyday nutrition, build a meal plan, and see how your choices add up.</p>
+        <a class="primary-button" href="#setup">Start planning <span aria-hidden="true">↓</span></a>
+        <div class="local-note"><span aria-hidden="true">◉</span> Your information stays on this device</div>
+      </div>
+      <div class="hero-art" aria-label="Illustration of a colorful balanced meal" role="img">
+        <div class="sun-shape"></div><div class="art-leaf leaf-one">✳</div><div class="art-leaf leaf-two">✳</div>
+        <div class="plate"><div class="plate-food food-greens"></div><div class="plate-food food-grain"></div><div class="plate-food food-tomato"></div><div class="plate-food food-beans"></div><div class="plate-food food-avocado"></div><div class="plate-center"></div></div>
+        <div class="art-caption"><span>✳</span> A plate with possibility</div>
+      </div>
+    </section>
+    <div class="ticker"><span>CURIOUS EATING</span><b>✳</b><span>EVERYDAY BALANCE</span><b>✳</b><span>YOUR PACE, YOUR PLATE</span><b>✳</b><span>CURIOUS EATING</span></div>
+    <section class="setup-section" id="setup">
+      <div class="setup-copy"><div class="eyebrow">A QUICK START</div><h2>A little about you</h2><p>A few optional details help choose general reference values. Your information stays on this device.</p></div>
+      <section class="panel profile-panel"><form id="profile-form">
+        <div class="profile-fields"><div><label for="age">Age <span class="unit-hint">years · ages 19–50 supported for references</span></label><input id="age" type="number" min="19" max="120" placeholder="e.g. 28" inputmode="numeric"></div>
+          <div><label for="dri-sex">DRI reference category <span class="info" title="Some reference values differ by sex category. This is only used to select general population references.">i</span></label><select id="dri-sex"><option value="">Choose (optional)</option><option value="female">Female reference</option><option value="male">Male reference</option></select></div>
+          <div id="life-stage-wrap" class="hidden"><label for="life-stage">Life stage</label><select id="life-stage"><option value="">Not applicable / skip</option><option value="pregnancy">Pregnancy</option><option value="lactation">Lactation</option></select></div>
+          <div id="stage-detail-wrap" class="hidden"><label for="stage-detail" id="stage-detail-label">Stage</label><select id="stage-detail"><option value="">Choose a stage</option><option value="early">First half (0–19 weeks)</option><option value="late">Second half (20+ weeks)</option></select></div>
+        </div>
+        <div class="setup-actions"><p class="field-help">Pregnancy and lactation needs vary. Discuss nutrition and supplements with your clinician.</p><button class="primary-button" type="submit">Continue to planner <span aria-hidden="true">↓</span></button></div>
+      </form></section>
+    </section>
+    <section class="planner-section" id="planner">
+      <div class="section-heading"><div><div class="eyebrow">YOUR PERSONAL WORKSPACE</div><h2 id="selected-date-title">Build your day</h2></div></div>
+      <div class="calendar-panel"><div class="calendar-heading"><div><span class="eyebrow">WEEK AT A GLANCE</span><strong id="week-label"></strong></div><div class="day-switch"><button class="day-arrow" id="prev-week" aria-label="Previous week">←</button><button class="day-arrow" id="next-week" aria-label="Next week">→</button></div></div><div id="week-days" class="week-days" aria-label="Choose a day"></div></div>
+      <div class="planner-grid" id="planner-tools">
+        <section class="panel plan-panel"><div class="panel-heading"><div><span class="step-number">01</span><h3>Your day, taking shape</h3></div><button id="clear-plan" class="text-button" type="button">Clear day</button></div>
+          <p class="panel-intro">Add foods to a meal, or drag planned foods between meals.</p>
+          <div class="meal-section" data-meal="breakfast"><div class="meal-heading"><span>Breakfast</span><small class="meal-count" data-meal-count="breakfast"></small></div><div class="meal-items" id="meal-breakfast"></div><div class="meal-empty">Drop foods here or add one from search.</div></div>
+          <div class="meal-section" data-meal="lunch"><div class="meal-heading"><span>Lunch</span><small class="meal-count" data-meal-count="lunch"></small></div><div class="meal-items" id="meal-lunch"></div><div class="meal-empty">Drop foods here or add one from search.</div></div>
+          <div class="meal-section" data-meal="dinner"><div class="meal-heading"><span>Dinner</span><small class="meal-count" data-meal-count="dinner"></small></div><div class="meal-items" id="meal-dinner"></div><div class="meal-empty">Drop foods here or add one from search.</div></div>
+          <div class="plan-total hidden" id="plan-total"></div>
+        </section>
+        <section class="panel food-panel"><div class="panel-heading"><div><span class="step-number">02</span><h3>Find your foods</h3></div><span class="food-count" id="food-count">Loading foods…</span></div>
+          <div class="search-wrap"><span aria-hidden="true">⌕</span><input type="search" id="food-search" placeholder="Search 5,000+ foods…" aria-label="Search foods"></div>
+          <div class="category-row" id="categories" aria-label="Filter by food group"></div>
+          <div class="food-list" id="food-list"></div>
+        </section>
+      </div>
+      <section class="nutrient-board"><div class="nutrient-board-heading"><div><div class="eyebrow">A DAY IN NUTRIENTS</div><h2>Nutrient snapshot</h2></div><span class="estimate-badge">ESTIMATE</span></div><p class="nutrient-board-intro">Compare your day with general references. A single day is not a scorecard; unavailable food values are labeled.</p><div id="nutrient-summary" class="nutrient-summary"></div><div class="summary-foot">These estimates do not establish that a plan is complete or safe. Portions, recipes, brands, and individual needs vary.</div></section>
+    </section>
+    <dialog id="meal-dialog" class="meal-dialog"><form id="meal-form"><div class="eyebrow">ADD TO YOUR DAY</div><h2 id="dialog-food-name">Choose a meal</h2><label for="meal-choice">Add this food to</label><select id="meal-choice"><option value="breakfast">Breakfast</option><option value="lunch">Lunch</option><option value="dinner">Dinner</option></select><div class="dialog-actions"><button id="cancel-meal" class="text-button" type="button">Cancel</button><button class="primary-button" type="submit">Add food</button></div></form></dialog>
+    <section class="guide-section" id="guide"><div class="guide-intro"><div class="eyebrow">A FRIENDLY FIELD GUIDE</div><h2>Nutrition has<br><em>room to breathe.</em></h2><p>Reference values are useful signposts for healthy populations. They are not a daily scorecard, and real needs can be personal.</p><a href="#sources" class="text-link">Explore the sources <span>↗</span></a></div>
+      <div class="guide-cards"><article class="guide-card"><span class="guide-icon">↗</span><h3>What do those letters mean?</h3><p><b>RDA</b> meets the needs of nearly all healthy people. <b>AI</b> is used when evidence isn't enough to set an RDA. <b>EAR</b> meets the needs of about half. <b>AMDR</b> is a healthy range for energy-giving nutrients.</p></article><article class="guide-card"><span class="guide-icon orange">△</span><h3>A ceiling, not a target</h3><p>The <b>UL</b> is the highest usual intake unlikely to pose risk. It is not a goal, and includes food, drinks, and supplements where applicable. More isn't always better.</p></article><article class="guide-card"><span class="guide-icon green">✳</span><h3>Keep it flexible</h3><p>Food planning can be imperfect and still be useful. Think patterns over time, enjoy variety, and make changes that feel realistic for you.</p></article></div>
+    </section>
+    <section class="safety-banner"><div class="safety-mark">✳</div><div><h3>Your wellbeing comes first.</h3><p>This tool cannot assess medical needs or determine whether a plan is complete or safe. If you have a medical condition, a history of disordered eating, or pregnancy-related concerns, seek individualized guidance from a qualified clinician or registered dietitian.</p></div><span class="safety-spark">✳</span></section>
+    <section class="sources" id="sources"><div><div class="eyebrow">TRANSPARENCY MATTERS</div><h2>Where these numbers come from</h2></div><div class="source-list"><p>Reference values: National Academies Dietary Reference Intakes, summarized by the NIH Office of Dietary Supplements. Adult values shown are for ages 19–50 and healthy populations. Some nutrients vary by age, reference category, and life stage. Unavailable food values are left blank.</p><p>Food estimates: USDA FoodData Central, Food and Nutrient Database for Dietary Studies (FNDDS) 2021–2023. Catalog values are per 100 g; serving weights and descriptions are from USDA household portions. Individual recipes and foods vary.</p><a href="https://ods.od.nih.gov/HealthInformation/nutrientrecommendations.aspx" target="_blank" rel="noopener noreferrer">NIH ODS: Nutrient recommendations ↗</a><a href="https://fdc.nal.usda.gov/download-datasets/" target="_blank" rel="noopener noreferrer">USDA FoodData Central datasets ↗</a><a href="https://nap.nationalacademies.org/resource/25353/030519DRISodiumPotassium.pdf" target="_blank" rel="noopener noreferrer">National Academies: Sodium and potassium DRI report ↗</a><small>Educational project · USDA FNDDS 2021–2023; DRI snapshot reviewed November 2026</small></div></section>
+  </main>
+  <footer><a class="brand" href="#top"><span class="brand-icon">g</span> gather<span class="brand-dot">.</span></a><span>Eat well. Stay curious. Be kind to yourself.</span><a href="#top">Back to top ↑</a></footer>
+</body>
+</html>
